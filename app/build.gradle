@@ -25,12 +25,9 @@ android {
         }
 
     }
-//    buildTypes.each {
-//        it.buildConfigField 'String', 'YELP_CONSUMER_KEY', YelpConsumerKey
-//        it.buildConfigField 'String', 'YELP_CONSUMER_SECRET', YelpConsumerSecret
-//        it.buildConfigField 'String', 'YELP_TOKEN', YelpToken
-//        it.buildConfigField 'String', 'YELP_TOKEN_SECRET', YelpTokenSecret
-//    }
+    buildTypes.each {
+        it.buildConfigField 'String', 'MOVIE_API_KEY', MovieApiKey
+    }
 }
 
 apply plugin: 'com.neenbedankt.android-apt'

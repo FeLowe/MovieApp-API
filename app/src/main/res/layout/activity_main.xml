@@ -22,7 +22,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/searchField"
+        android:id="@+id/searchMovie"
         android:layout_above="@+id/findMoviesButton"
         android:layout_centerHorizontal="true"
         android:hint="search for movie by name" />
