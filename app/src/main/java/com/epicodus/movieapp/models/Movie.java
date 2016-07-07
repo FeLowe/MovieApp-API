@@ -1,10 +1,13 @@
 package com.epicodus.movieapp.models;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 
 /**
  * Created by Guest on 7/6/16.
  */
+@Parcel
 public class Movie {
     private String mPoster;
     private String mTitle;
@@ -13,6 +16,8 @@ public class Movie {
 //    private ArrayList<String> mActors = new ArrayList<>();
     private String mRelease;
     private double mRating;
+
+    public Movie(){}
 
     public Movie(String poster, String title, String synopsis, double rating, String release) {
         this.mPoster = "http://image.tmdb.org/t/p/w500" + poster;

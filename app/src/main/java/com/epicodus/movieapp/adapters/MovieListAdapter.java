@@ -1,6 +1,7 @@
 package com.epicodus.movieapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 
 import com.epicodus.movieapp.R;
 import com.epicodus.movieapp.models.Movie;
+import com.epicodus.movieapp.ui.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -47,7 +51,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     }
 
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.movieImageView) ImageView mMovieImageView;
         @Bind(R.id.movieNameTextView) TextView mMovieNameTextView;
         @Bind(R.id.releaseTextView) TextView mReleaseTextView;
@@ -59,6 +63,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    int itemPosition = getLayoutPosition();
+                    Intent intent = new Intent(mContext, MovieDetailActivity.class);
+                    intent.putExtra("position", itemPosition + "");
+                    intent.putExtra("movies", Parcels.wrap(mMovies));
+                    mContext.startActivity(intent);
+                }
+            });
         }
         public void bindMovie(Movie movie) {
             Picasso.with(mContext).load(movie.getPoster()).into(mMovieImageView);
@@ -66,6 +82,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             mReleaseTextView.setText(movie.getRelease());
             mRatingTextView.setText("Rating: " + movie.getRating() + "/10");
         }
+
+
 
     }
 }

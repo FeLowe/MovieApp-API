@@ -20,9 +20,9 @@
         <activity android:name=".ui.MoviesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.epicodus.movieapp.ui.MainActivity">
-            </meta-data>
+                android:value="com.epicodus.movieapp.ui.MainActivity"></meta-data>
         </activity>
+        <activity android:name=".ui.MovieDetailActivity"></activity>
     </application>
 
 </manifest>
