@@ -3,6 +3,7 @@ package com.epicodus.movieapp.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.epicodus.movieapp.R;
+import com.epicodus.movieapp.adapters.MovieListAdapter;
 import com.epicodus.movieapp.models.Movie;
 import com.epicodus.movieapp.services.MovieService;
 
@@ -26,7 +28,7 @@ public class MoviesActivity extends AppCompatActivity {
     public static final String TAG = MoviesActivity.class.getSimpleName();
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
-//    private MovieListAdapter mAdapter;
+    private MovieListAdapter mAdapter;
     public ArrayList<Movie> mMovies = new ArrayList<>();
 
     @Override
@@ -57,19 +59,28 @@ public class MoviesActivity extends AppCompatActivity {
                 Log.d("success", "onresponse");
                 Log.d("response", response + "!");
 
-                try {
                     String jsonData = response.body().string();
+                Log.d("DATA", jsonData);
 
-                    if (response.isSuccessful()) {
-                        Log.v(TAG, jsonData);
 
-                        mMovies = movieService.processResults(jsonData);
-                        Log.d("first movie", mMovies.get(0).getTitle());
+                    mMovies = movieService.processResults(jsonData);
+                    Log.d("first movie", mMovies.get(0).getTitle() + mMovies.size());
+
+                    MoviesActivity.this.runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            mAdapter = new MovieListAdapter(getApplicationContext(), mMovies);
+                            mRecyclerView.setAdapter(mAdapter);
+
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MoviesActivity.this);
+                            mRecyclerView.setLayoutManager(layoutManager);
+                            mRecyclerView.setHasFixedSize(true);
                     }
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
+                });
+
             }
         });
     }
 }
+
