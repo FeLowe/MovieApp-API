@@ -5,12 +5,21 @@ package com.epicodus.movieapp.services;
 import android.util.Log;
 
 import com.epicodus.movieapp.Constants;
+import com.epicodus.movieapp.models.Movie;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MovieService {
@@ -35,4 +44,34 @@ public class MovieService {
         call.enqueue(callback);
     }
 
+    public ArrayList<Movie> processResults(Response response) {
+        ArrayList<Movie> movies = new ArrayList<>();
+
+        try {
+            String jsonData = response.body().string();
+            if (response.isSuccessful()) {
+                JSONObject movieJSON = new JSONObject(jsonData);
+
+                JSONArray resultsJSON = movieJSON.getJSONArray("results");
+
+                for (int i = 0; i < resultsJSON.length(); i++) {
+
+                    JSONObject restaurantJSON = resultsJSON.getJSONObject(i);
+                    String poster = restaurantJSON.getString("poster_path");
+                    String title = restaurantJSON.getString("title");
+                    String synopsis = restaurantJSON.getString("overview");
+                    double rating = restaurantJSON.getDouble("vote_average");
+                    String release = restaurantJSON.getString("release_date");
+
+//                String title = restaurantJSON.optString("display_phone", "Phone not available");
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
 }

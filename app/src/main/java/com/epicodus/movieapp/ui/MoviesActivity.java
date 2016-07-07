@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.epicodus.movieapp.R;
+import com.epicodus.movieapp.models.Movie;
 import com.epicodus.movieapp.services.MovieService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,8 +24,10 @@ import okhttp3.Response;
 
 public class MoviesActivity extends AppCompatActivity {
     public static final String TAG = MoviesActivity.class.getSimpleName();
+
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 //    private MovieListAdapter mAdapter;
+    public ArrayList<Movie> mMovies = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class MoviesActivity extends AppCompatActivity {
                 try {
                     String jsonData = response.body().string();
                     Log.v(TAG, jsonData);
+                    mMovies = movieService.processResults(response);
                 }catch(IOException e){
                     e.printStackTrace();
                 }
