@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.epicodus.movieapp.R;
 import com.epicodus.movieapp.models.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
-//        @Bind(R.id.movieImageView) ImageView mMovieImageView;
+        @Bind(R.id.movieImageView) ImageView mMovieImageView;
         @Bind(R.id.movieNameTextView) TextView mMovieNameTextView;
         @Bind(R.id.releaseTextView) TextView mReleaseTextView;
         @Bind(R.id.ratingTextView) TextView mRatingTextView;
@@ -60,7 +61,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             mContext = itemView.getContext();
         }
         public void bindMovie(Movie movie) {
-//            mMovieImageView.setText(movie.getPoster());
+            Picasso.with(mContext).load(movie.getPoster()).into(mMovieImageView);
             mMovieNameTextView.setText(movie.getTitle());
             mReleaseTextView.setText(movie.getRelease());
             mRatingTextView.setText("Rating: " + movie.getRating() + "/10");
