@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.epicodus.myrestaurants"
+        applicationId "com.epicodus.movieapp"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1

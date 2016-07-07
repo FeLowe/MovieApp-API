@@ -50,15 +50,22 @@ public class MoviesActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Log.d("success", "onresponse");
+                Log.d("response", response + "!");
+
                 try {
                     String jsonData = response.body().string();
-                    Log.v(TAG, jsonData);
-                    mMovies = movieService.processResults(response);
+
+                    if (response.isSuccessful()) {
+                        Log.v(TAG, jsonData);
+
+                        mMovies = movieService.processResults(jsonData);
+                        Log.d("first movie", mMovies.get(0).getTitle());
+                    }
                 }catch(IOException e){
                     e.printStackTrace();
                 }
